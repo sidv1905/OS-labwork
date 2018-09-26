@@ -1,47 +1,41 @@
 #include<iostream>
 using namespace std;
-void insertion(int [],int [],int);
-
 int main()
 {
-	int i,n,p[20],b[20];
-	float avg,sum=0;
-	cout<<"Enter the no of process ";
+	int i,j,temp,b[10],n;
+	float tat=0,w=0,sum=0;
+	cout<<"Enter number of processes: ";
 	cin>>n;
-	for(i=0;i<n;i++)
+	for(i=1;i<=n;i++)
 	{
-		cout<<"Enter the process no ";
-		cin>>p[i];
-		cout<<"Enter its burst time ";
+		cout<<"Burst time of "<<i<<" process: ";
 		cin>>b[i];
 	}
-	insertion(p,b,n);
-	for(i=0;i<n;i++)
-	{
-		sum=sum+b[i];	
+
+	 for(i=1;i<=n;i++)
+	 {
+	 	for(j=1;j<=n;j++)
+	 	{
+	 		if(b[i]<b[j])
+	 		{
+	 		    temp=b[i];
+	 			b[i]=b[j];
+	 			b[j]=temp;
+			 }
+		 }
+	 }
+	cout<<b[2];
+	cout<<"\n\tProcess \t   BT    \t Waiting time \t turn around time\n";
+	for(i=1;i<=n;i++)
+	{	
+		tat=b[i]+w;
+		cout<<"Process   "<<i<<"  \t\t   "<<b[i]<<"  \t\t  "<<w<<"  \t\t "<<tat<<endl;
+		w+=b[i];
+		sum=sum+tat;
 	}
-	sum=sum-b[n-1];
-	avg=sum/n;
-	cout<<"Total waiting time "<<sum<<endl;
-	cout<<"average time "<<avg;
+	
+	cout<<"Average waiting time : "<<tat/n<<endl;
+	cout<<"Average TAT :"<<sum/n;
 	return 0;
 }
 
-void insertion(int a[],int b[],int n)
-{
-	int i,j,m,temp;
-	for(int k=0;k<n;k++)
-	{
-		i=k;
-		j=i+1;
-		temp=b[j];
-		while(b[i]>temp&&i!=-1)
-		{
-			b[j]=b[i];
-			--j;
-			--i;
-		}
-		b[j]=temp;
-		a[j]=a[++i];
-	}
-}
